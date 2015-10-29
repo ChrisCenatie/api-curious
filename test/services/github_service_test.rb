@@ -63,12 +63,12 @@ class GithubServiceTest < ActiveSupport::TestCase
     end
   end
 
-  test '#recent_commits' do
-    VCR.use_cassette("github_service#recent_commits") do
+  test '#user_commits' do
+    VCR.use_cassette("github_service#user_commits") do
       commits = service.user_commits(ENV["nickname"])
 
-      assert_equal 1, commits.count
-      assert_equal 1, commits.first[:payload][:commits].count
+      assert_equal 2, commits.count
+      assert_equal 2, commits.first[:payload][:commits].count
       assert_equal "ChrisCenatie/api-curious", commits.first[:repo][:name]
     end
   end
