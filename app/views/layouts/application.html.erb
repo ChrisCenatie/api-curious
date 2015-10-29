@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ApiCurious</title>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+  <%= csrf_meta_tags %>
+  <link href="css/custom.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+  <nav>
+    <div class="nav-wrapper">
+      <% if current_user %>
+      <a href="/users/<%= current_user.id %>" class="brand-logo"> BackHub</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li>Hello, <%= current_user.name %></li>
+          <li><%= link_to "Logout", logout_path %></li>
+          <li>
+            <form>
+              <div class="input-field">
+                <input id="search" type="search" required>
+                <label for="search"><i class="material-icons">search</i></label>
+                <i class="material-icons">close</i>
+              </div>
+            </form>
+          </li>
+          </ul>
+        <% else %>
+        <a href="/" class="brand-logo"> BackHub</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><%= link_to "LOGIN", login_path %></li>
+        </ul>
+        <% end %>
+    </div>
+  </nav>
+  <div class="container responsive">
+<%= yield %>
+</div>
+
+</body>
+</html>
