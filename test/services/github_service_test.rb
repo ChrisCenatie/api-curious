@@ -40,6 +40,7 @@ class GithubServiceTest < ActiveSupport::TestCase
       repos = service.repos
       repo = repos.first
 
+      assert_equal 28, repos.count
       assert_equal 'api-curious', repo[:name]
       assert_equal 'https://github.com/ChrisCenatie/api-curious', repo[:html_url]
     end
@@ -48,10 +49,8 @@ class GithubServiceTest < ActiveSupport::TestCase
   test '#events' do
     VCR.use_cassette("github_service#events") do
       events = service.events(ENV["nickname"])
-      push_events = events.select{ |event| event[:type] == "PushEvent"}
 
-      assert_equal 2, push_events.count
-      assert_equal 6, push_events.first[:payload][:commits].count
+      assert_equal 30, events.count
     end
   end
 
@@ -64,4 +63,13 @@ class GithubServiceTest < ActiveSupport::TestCase
     end
   end
 
+  test '#recent_commits' do
+    VCR.use_cassette("github_service#recent_commits") do
+      commits = service.user_commits(ENV["nickname"])
+
+      assert_equal 1, commits.count
+      assert_equal 1, commits.first[:payload][:commits].count
+      assert_equal "ChrisCenatie/api-curious", commits.first[:repo][:name]
+    end
+  end
 end
