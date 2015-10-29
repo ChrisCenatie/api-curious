@@ -3,13 +3,7 @@
           <div class="row valign-wrapper">
             <div class="col s3">
             <%= image_tag current_user.avatar_url, class: "circle responsive-img" %>
-            <ul class="center">
-              <li><a href="#">Starred Repos</a> - 1000</li>
-              <li><a href="#">Followers</a> - 1000000</li>
-              <li><a href="#">Following</a> - 2</li>
-              <li><a href="#">Organizations</a></li>
-              <li><a href="#">Repos</a></li>
-            </ul>
+            <%= render partial: "basic_info", locals: {github_service: @github_service} %>
           </div>
           <div class="col s8">
             <table>
@@ -18,16 +12,14 @@
                     <th data-field="contributions">Contributions</th>
                     <th data-field="name">Longest Streak</th>
                     <th data-field="price">Current Streak</th>
-                    <th data-field="price">Recent Commits</th>
                 </tr>
               </thead>
 
               <tbody>
                 <tr>
-                  <td>1000</td>
-                  <td>30 Years</td>
-                  <td>30 Years</td>
-                  <td>11 <a href="#">Commits</a>, 7 <a href="#">Pull Requests</a></td>
+                  <td><%= @total %></td>
+                  <td><%= @longest_streak %></td>
+                  <td><%= @current_streak %></td>
                 </tr>
               </tbody>
             </table>
@@ -35,3 +27,5 @@
         </div>
       </div>
     </div>
+<%= render partial: "recent_commits", locals: {github_service: @github_service} %>    
+<%= render partial: "repositories", locals: {github_service: @github_service} %>

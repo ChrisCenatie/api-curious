@@ -32,6 +32,10 @@ class GithubService
     parse(connection.get("/users/#{username}/events"))
   end
 
+  def user_commits(username)
+    events(username).select{ |event| event[:type] == "PushEvent"}
+  end
+
   def organizations(username)
     parse(connection.get("/users/#{username}/orgs"))
   end
