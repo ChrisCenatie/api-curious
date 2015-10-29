@@ -1,0 +1,29 @@
+<div class="col s12 m8 offset-m2 l6 offset-l3">
+  <div class="card-panel grey lighten-5 z-depth-1">
+    <h3 class="center">Recent Followed User Commits</h3>
+    <div class="row valign-wrapper">
+      <div class="col s12">
+            <% @github_service.following.each do |followed| %>
+              <h4><%= followed[:login] %></h4>
+              <table>
+                <thead>
+                  <tr>
+                    <th data-field="repo-name">Repository</th>
+                    <th data-field="branch">Branch</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <% @github_service.user_commits(followed[:login]).each do |commit| %>
+                  <tr>
+                    <td><%= commit[:repo][:name] %></td>
+                    <td><%= commit[:payload][:ref].split('/').last %></td>
+                  </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% end %>
+      </div>
+    </div>
+  </div>
+</div>
